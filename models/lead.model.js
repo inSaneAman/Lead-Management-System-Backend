@@ -4,16 +4,16 @@ const leadSchema = new Schema({
     first_name: {
         type: String,
         required: [true, "First name is required"],
-        minLength: [5, "Full name must be atleast 5 characters long"],
-        maxLength: [15,"Full name must not exceed more than 15 characters",],
+        minLength: [2, "First name must be at least 2 characters long"],
+        maxLength: [15, "First name must not exceed more than 15 characters"],
         lowercase: true,
         trim: true,
     },
     last_name: {
         type: String,
         required: [true, "Last name is required"],
-        minLength: [5, "Full name must be atleast 5 characters long"],
-        maxlength: [15, "Last name cannot exceed 15 characters"],
+        minLength: [2, "Last name must be at least 2 characters long"],
+        maxLength: [15, "Last name cannot exceed 15 characters"],
         lowercase: true,
         trim: true,
     },
@@ -84,15 +84,6 @@ const leadSchema = new Schema({
         type: Boolean,
         default: false
     },
-    notes: {
-        type: String,
-        maxlength: [1000, "Notes cannot exceed 1000 characters"]
-    },
-    assigned_to: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        default: null
-    }
 }, {
     timestamps: true,
     toJSON: { virtuals: true },
@@ -103,7 +94,6 @@ leadSchema.virtual('full_name').get(function() {
     return `${this.first_name} ${this.last_name}`;
 });
 
-leadSchema.index({ email: 1 });
 leadSchema.index({ status: 1 });
 leadSchema.index({ source: 1 });
 leadSchema.index({ company: 1 });

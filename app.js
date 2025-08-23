@@ -6,7 +6,7 @@ import morgan from "morgan";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import userRoutes from "./routes/user.routes.js";
 import bodyParser from "body-parser";
-
+import leadRoutes from "./routes/lead.routes.js";
 config();
 
 const app = express();
@@ -29,6 +29,7 @@ app.get("/ping", (req, res) => {
 });
 
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/leads", leadRoutes);
 
 app.all("*", (req, res) => {
     res.status(404).send("OOPS! 404 page not found");
