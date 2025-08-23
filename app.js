@@ -4,6 +4,7 @@ import cors from "cors";
 import { config } from "dotenv";
 import morgan from "morgan";
 import bodyParser from "body-parser";
+import errorMiddleware from "./middlewares/error.middleware.js";
 config();
 
 const app = express();
@@ -23,5 +24,5 @@ app.use("/ping", (req, res) => {
     res.send("Pong");
 });
 
-
+app.use(errorMiddleware);
 export default app;
