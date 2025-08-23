@@ -7,7 +7,7 @@ const userSchema = new Schema({
     first_name: {
         type: String,
         required: [true, "First name is required"],
-        minLength: [5, "Full name must be atleast 5 characters long"],
+        minLength: [3, "Full name must be atleast 5 characters long"],
         maxLength: [15,"Full name must not exceed more than 15 characters",],
         lowercase: true,
         trim: true,
@@ -15,7 +15,7 @@ const userSchema = new Schema({
     last_name: {
         type: String,
         required: [true, "Last name is required"],
-        minLength: [5, "Full name must be atleast 5 characters long"],
+        minLength: [3, "Full name must be atleast 5 characters long"],
         maxlength: [15, "Last name cannot exceed 15 characters"],
         lowercase: true,
         trim: true,

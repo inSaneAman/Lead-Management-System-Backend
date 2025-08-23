@@ -5,20 +5,19 @@ import {
     logout,
     getUserDetails,
     updateUserDetails,
-    forgotPassword,
-    resetPassword,
     changePassword,
+    deleteUser
 } from "../controllers/user.controller.js";
-import {isLoggedIn} from "../middlewares/auth.middleware.js"
+import { isLoggedIn } from "../middlewares/auth.middleware.js";
 
 const router = Router();
+
 router.post("/register", register);
 router.post("/login", login);
-router.post("/logout",isLoggedIn, logout);
-router.get("/profile",isLoggedIn, getUserDetails);
-router.post("/forgot-password", forgotPassword);
-router.post("/reset/:resetToken", resetPassword);
-router.post("/change-password",isLoggedIn, changePassword);
-router.put("/update-profile/:id",isLoggedIn, updateUserDetails);
 
+router.post("/logout", isLoggedIn, logout);
+router.get("/profile", isLoggedIn, getUserDetails);
+router.put("/update-profile", isLoggedIn, updateUserDetails);
+router.post("/change-password", isLoggedIn, changePassword);
+router.delete("/delete-profile", isLoggedIn, deleteUser);
 export default router;
