@@ -1,24 +1,33 @@
-import AppError from "../utils/error.util.js";
 import jwt from "jsonwebtoken";
-import User from "../models/user.model.js";
+import User from "../models/User.js";
+import AppError from "../utils/AppError.js";
 
 const isLoggedIn = async (req, res, next) => {
     try {
-        const { token } = req.cookies;
+        // Get token from cookies or Authorization header
+        let token;
+        if (req.cookies?.token) {
+            token = req.cookies.token;
+        } else if (
+            req.headers.authorization &&
+            req.headers.authorization.startsWith("Bearer ")
+        ) {
+            token = req.headers.authorization.split(" ")[1];
+        }
 
         if (!token) {
             return next(new AppError("Unauthenticated, please login", 401));
         }
 
+        // Verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        if (!decoded || !decoded.id) {
+        if (!decoded?.id) {
             return next(new AppError("Invalid token", 401));
         }
 
         // Find user and attach to request
         const user = await User.findById(decoded.id).select("-password");
-
         if (!user) {
             return next(new AppError("User not found", 401));
         }
